@@ -19,7 +19,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-gray-800 text-white">
+    <footer className="bg-blue-950 text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -28,21 +28,21 @@ export default function Footer() {
               <Hotel className="h-8 w-8 text-blue-400" />
               <span className="text-xl font-bold">HotelManager</span>
             </Link>
-            <p className="text-gray-300 mb-4 max-w-md">
+            <p className="text-blue-200 mb-4 max-w-md">
               Professional hotel management solution that helps you streamline operations, 
               enhance guest experiences, and grow your business efficiently.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition duration-300">
+              <a href="#" className="text-blue-300 hover:text-white transition duration-300">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition duration-300">
+              <a href="#" className="text-blue-300 hover:text-white transition duration-300">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition duration-300">
+              <a href="#" className="text-blue-300 hover:text-white transition duration-300">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition duration-300">
+              <a href="#" className="text-blue-300 hover:text-white transition duration-300">
                 <Mail className="h-5 w-5" />
               </a>
             </div>
@@ -56,7 +56,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link 
                     href={link.href} 
-                    className="text-gray-300 hover:text-white transition duration-300"
+                    className="text-blue-200 hover:text-white transition duration-300"
                   >
                     {link.label}
                   </Link>
@@ -73,7 +73,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link 
                     href={link.href} 
-                    className="text-gray-300 hover:text-white transition duration-300"
+                    className="text-blue-200 hover:text-white transition duration-300"
                   >
                     {link.label}
                   </Link>
@@ -84,8 +84,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-          <p className="text-gray-400">
+        <div className="border-t border-blue-800 mt-8 pt-8 text-center">
+          <p className="text-blue-300">
             © {currentYear} Hotel Management System. All rights reserved.
           </p>
         </div>
