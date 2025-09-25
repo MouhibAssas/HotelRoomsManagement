@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Hotel, Plus, Trash2, Edit, Save, X, Bed, Users, Eye, DollarSign } from 'lucide-react'
+import { RoomDataService } from '../../../lib/roomDataService'
 
 export default function HotelManagementPage() {
   const [rooms, setRooms] = useState([])
@@ -22,57 +23,21 @@ export default function HotelManagementPage() {
   })
 
   useEffect(() => {
-    // Sample data for testing
-    const sampleRooms = [
-      {
-        id: 1,
-        roomNumber: '101',
-        bedrooms: 1,
-        maxGuests: 2,
-        viewType: 'sea',
-        basePrice: 300,
-        summerPrice: 450,
-        winterPrice: 250,
-        status: 'available'
-      },
-      {
-        id: 2,
-        roomNumber: '102',
-        bedrooms: 2,
-        maxGuests: 4,
-        viewType: 'pool',
-        basePrice: 400,
-        summerPrice: 600,
-        winterPrice: 350,
-        status: 'occupied'
-      },
-      {
-        id: 3,
-        roomNumber: '201',
-        bedrooms: 1,
-        maxGuests: 2,
-        viewType: 'sea',
-        basePrice: 350,
-        summerPrice: 500,
-        winterPrice: 300,
-        status: 'maintenance'
-      },
-      {
-        id: 4,
-        roomNumber: '202',
-        bedrooms: 3,
-        maxGuests: 6,
-        viewType: 'pool',
-        basePrice: 500,
-        summerPrice: 750,
-        winterPrice: 450,
-        status: 'cleaning'
+    const loadRooms = async () => {
+      try {
+        const roomsData = await RoomDataService.initializeData()
+        setRooms(roomsData)
+        setFilteredRooms(roomsData)
+      } catch (error) {
+        console.error('Error loading rooms:', error)
+        // Fallback to default data
+        const defaultRooms = RoomDataService.getDefaultRooms()
+        setRooms(defaultRooms)
+        setFilteredRooms(defaultRooms)
       }
-    ]
+    }
     
-    // Load sample data on component mount
-    setRooms(sampleRooms)
-    setFilteredRooms(sampleRooms)
+    loadRooms()
   }, [])
 
   // Filter and search logic
@@ -102,27 +67,32 @@ export default function HotelManagementPage() {
     }))
   }
 
-  const handleAddRoom = () => {
+  const handleAddRoom = async () => {
     if (!formData.roomNumber) return
 
-    const newRoom = {
-      id: Date.now(),
-      ...formData,
-      roomNumber: formData.roomNumber.toString()
-    }
+    try {
+      const newRoom = await RoomDataService.addRoom({
+        ...formData,
+        roomNumber: formData.roomNumber.toString()
+      })
 
-    setRooms(prev => [...prev, newRoom])
-    setFormData({
-      roomNumber: '',
-      bedrooms: 1,
-      maxGuests: 2,
-      viewType: 'none',
-      basePrice: 0,
-      summerPrice: 0,
-      winterPrice: 0,
-      status: 'available'
-    })
-    setShowAddForm(false)
+      if (newRoom) {
+        setRooms(prev => [...prev, newRoom])
+        setFormData({
+          roomNumber: '',
+          bedrooms: 1,
+          maxGuests: 2,
+          viewType: 'none',
+          basePrice: 0,
+          summerPrice: 0,
+          winterPrice: 0,
+          status: 'available'
+        })
+        setShowAddForm(false)
+      }
+    } catch (error) {
+      console.error('Error adding room:', error)
+    }
   }
 
   const handleEditRoom = (room) => {
@@ -130,33 +100,55 @@ export default function HotelManagementPage() {
     setFormData(room)
   }
 
-  const handleSaveEdit = () => {
-    setRooms(prev => prev.map(room => 
-      room.id === editingRoom ? { ...formData, id: editingRoom } : room
-    ))
-    setEditingRoom(null)
-    setFormData({
-      roomNumber: '',
-      bedrooms: 1,
-      maxGuests: 2,
-      viewType: 'none',
-      basePrice: 0,
-      summerPrice: 0,
-      winterPrice: 0,
-      status: 'available'
-    })
-  }
-
-  const handleDeleteRoom = (roomId) => {
-    if (confirm('Are you sure you want to delete this room?')) {
-      setRooms(prev => prev.filter(room => room.id !== roomId))
+  const handleSaveEdit = async () => {
+    try {
+      const updatedRoom = await RoomDataService.updateRoom(editingRoom, formData)
+      
+      if (updatedRoom) {
+        setRooms(prev => prev.map(room => 
+          room.id === editingRoom ? updatedRoom : room
+        ))
+        setEditingRoom(null)
+        setFormData({
+          roomNumber: '',
+          bedrooms: 1,
+          maxGuests: 2,
+          viewType: 'none',
+          basePrice: 0,
+          summerPrice: 0,
+          winterPrice: 0,
+          status: 'available'
+        })
+      }
+    } catch (error) {
+      console.error('Error updating room:', error)
     }
   }
 
-  const handleStatusChange = (roomId, newStatus) => {
-    setRooms(prev => prev.map(room => 
-      room.id === roomId ? { ...room, status: newStatus } : room
-    ))
+  const handleDeleteRoom = async (roomId) => {
+    if (confirm('Are you sure you want to delete this room?')) {
+      try {
+        const success = await RoomDataService.deleteRoom(roomId)
+        if (success) {
+          setRooms(prev => prev.filter(room => room.id !== roomId))
+        }
+      } catch (error) {
+        console.error('Error deleting room:', error)
+      }
+    }
+  }
+
+  const handleStatusChange = async (roomId, newStatus) => {
+    try {
+      const updatedRoom = await RoomDataService.updateRoom(roomId, { status: newStatus })
+      if (updatedRoom) {
+        setRooms(prev => prev.map(room => 
+          room.id === roomId ? updatedRoom : room
+        ))
+      }
+    } catch (error) {
+      console.error('Error updating room status:', error)
+    }
   }
 
   const getStatusColor = (status) => {

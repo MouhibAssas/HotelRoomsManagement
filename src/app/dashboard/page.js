@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Hotel, Users, Calendar, TrendingUp, Eye, RefreshCw, Filter } from 'lucide-react'
+import { RoomDataService } from '../../lib/roomDataService'
 
 export default function DashboardPage() {
   const [rooms, setRooms] = useState([])
@@ -9,95 +10,19 @@ export default function DashboardPage() {
   const [lastUpdated, setLastUpdated] = useState(new Date())
 
   useEffect(() => {
-    // Sample data - in real app, this would come from API
-    const sampleRooms = [
-      {
-        id: 1,
-        roomNumber: '101',
-        bedrooms: 1,
-        maxGuests: 2,
-        viewType: 'sea',
-        status: 'available',
-        guestName: null,
-        checkIn: null,
-        checkOut: null,
-        basePrice: 300,
-        summerPrice: 450,
-        winterPrice: 250
-      },
-      {
-        id: 2,
-        roomNumber: '102',
-        bedrooms: 2,
-        maxGuests: 4,
-        viewType: 'pool',
-        status: 'occupied',
-        guestName: 'John Smith',
-        checkIn: '2024-01-15',
-        checkOut: '2024-01-18',
-        basePrice: 400,
-        summerPrice: 600,
-        winterPrice: 350
-      },
-      {
-        id: 3,
-        roomNumber: '201',
-        bedrooms: 1,
-        maxGuests: 2,
-        viewType: 'sea',
-        status: 'maintenance',
-        guestName: null,
-        checkIn: null,
-        checkOut: null,
-        basePrice: 350,
-        summerPrice: 500,
-        winterPrice: 300
-      },
-      {
-        id: 4,
-        roomNumber: '202',
-        bedrooms: 3,
-        maxGuests: 6,
-        viewType: 'pool',
-        status: 'cleaning',
-        guestName: null,
-        checkIn: null,
-        checkOut: null,
-        basePrice: 500,
-        summerPrice: 750,
-        winterPrice: 450
-      },
-      {
-        id: 5,
-        roomNumber: '301',
-        bedrooms: 2,
-        maxGuests: 4,
-        viewType: 'specific',
-        status: 'available',
-        guestName: null,
-        checkIn: null,
-        checkOut: null,
-        basePrice: 450,
-        summerPrice: 650,
-        winterPrice: 400
-      },
-      {
-        id: 6,
-        roomNumber: '302',
-        bedrooms: 1,
-        maxGuests: 2,
-        viewType: 'none',
-        status: 'occupied',
-        guestName: 'Sarah Johnson',
-        checkIn: '2024-01-16',
-        checkOut: '2024-01-20',
-        basePrice: 280,
-        summerPrice: 420,
-        winterPrice: 220
+    const loadRooms = async () => {
+      try {
+        const roomsData = await RoomDataService.initializeData()
+        setRooms(roomsData)
+      } catch (error) {
+        console.error('Error loading rooms:', error)
+        // Fallback to default data
+        const defaultRooms = RoomDataService.getDefaultRooms()
+        setRooms(defaultRooms)
       }
-    ]
+    }
     
-    setRooms(sampleRooms)
+    loadRooms()
   }, [])
 
   const getStatusColor = (status) => {
@@ -141,9 +66,14 @@ export default function DashboardPage() {
 
   const occupancyRate = ((stats.occupied / stats.total) * 100).toFixed(1)
 
-  const refreshData = () => {
+  const refreshData = async () => {
     setLastUpdated(new Date())
-    // In real app, this would fetch fresh data from API
+    try {
+      const roomsData = await RoomDataService.getRooms()
+      setRooms(roomsData)
+    } catch (error) {
+      console.error('Error refreshing data:', error)
+    }
   }
 
   return (
