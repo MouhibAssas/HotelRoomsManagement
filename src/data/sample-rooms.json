@@ -1,0 +1,209 @@
+{
+  "rooms": [
+    {
+      "id": 1,
+      "roomNumber": "101",
+      "bedrooms": 1,
+      "maxGuests": 2,
+      "viewType": "sea",
+      "status": "available",
+      "guestName": null,
+      "checkIn": null,
+      "checkOut": null,
+      "basePrice": 300,
+      "summerPrice": 450,
+      "winterPrice": 250,
+      "amenities": ["WiFi", "Air Conditioning", "Mini Bar", "Sea View"],
+      "floor": 1,
+      "roomType": "Standard"
+    },
+    {
+      "id": 2,
+      "roomNumber": "102",
+      "bedrooms": 2,
+      "maxGuests": 4,
+      "viewType": "pool",
+      "status": "occupied",
+      "guestName": "John Smith",
+      "checkIn": "2024-01-15",
+      "checkOut": "2024-01-18",
+      "basePrice": 400,
+      "summerPrice": 600,
+      "winterPrice": 350,
+      "amenities": ["WiFi", "Air Conditioning", "Mini Bar", "Pool View", "Balcony"],
+      "floor": 1,
+      "roomType": "Deluxe"
+    },
+    {
+      "id": 3,
+      "roomNumber": "201",
+      "bedrooms": 1,
+      "maxGuests": 2,
+      "viewType": "sea",
+      "status": "maintenance",
+      "guestName": null,
+      "checkIn": null,
+      "checkOut": null,
+      "basePrice": 350,
+      "summerPrice": 500,
+      "winterPrice": 300,
+      "amenities": ["WiFi", "Air Conditioning", "Sea View", "Balcony"],
+      "floor": 2,
+      "roomType": "Standard"
+    },
+    {
+      "id": 4,
+      "roomNumber": "202",
+      "bedrooms": 3,
+      "maxGuests": 6,
+      "viewType": "pool",
+      "status": "cleaning",
+      "guestName": null,
+      "checkIn": null,
+      "checkOut": null,
+      "basePrice": 500,
+      "summerPrice": 750,
+      "winterPrice": 450,
+      "amenities": ["WiFi", "Air Conditioning", "Mini Bar", "Pool View", "Balcony", "Kitchenette"],
+      "floor": 2,
+      "roomType": "Suite"
+    },
+    {
+      "id": 5,
+      "roomNumber": "301",
+      "bedrooms": 2,
+      "maxGuests": 4,
+      "viewType": "specific",
+      "status": "available",
+      "guestName": null,
+      "checkIn": null,
+      "checkOut": null,
+      "basePrice": 450,
+      "summerPrice": 650,
+      "winterPrice": 400,
+      "amenities": ["WiFi", "Air Conditioning", "Mini Bar", "Mountain View", "Balcony"],
+      "floor": 3,
+      "roomType": "Deluxe"
+    },
+    {
+      "id": 6,
+      "roomNumber": "302",
+      "bedrooms": 1,
+      "maxGuests": 2,
+      "viewType": "none",
+      "status": "occupied",
+      "guestName": "Sarah Johnson",
+      "checkIn": "2024-01-16",
+      "checkOut": "2024-01-20",
+      "basePrice": 280,
+      "summerPrice": 420,
+      "winterPrice": 220,
+      "amenities": ["WiFi", "Air Conditioning"],
+      "floor": 3,
+      "roomType": "Economy"
+    },
+    {
+      "id": 7,
+      "roomNumber": "401",
+      "bedrooms": 2,
+      "maxGuests": 4,
+      "viewType": "sea",
+      "status": "available",
+      "guestName": null,
+      "checkIn": null,
+      "checkOut": null,
+      "basePrice": 550,
+      "summerPrice": 800,
+      "winterPrice": 500,
+      "amenities": ["WiFi", "Air Conditioning", "Mini Bar", "Sea View", "Balcony", "Jacuzzi"],
+      "floor": 4,
+      "roomType": "Premium"
+    },
+    {
+      "id": 8,
+      "roomNumber": "402",
+      "bedrooms": 1,
+      "maxGuests": 2,
+      "viewType": "pool",
+      "status": "available",
+      "guestName": null,
+      "checkIn": null,
+      "checkOut": null,
+      "basePrice": 320,
+      "summerPrice": 480,
+      "winterPrice": 280,
+      "amenities": ["WiFi", "Air Conditioning", "Pool View"],
+      "floor": 4,
+      "roomType": "Standard"
+    }
+  ],
+  "roomTypes": [
+    {
+      "type": "Economy",
+      "description": "Basic room with essential amenities",
+      "basePriceRange": "220-280 TND",
+      "features": ["WiFi", "Air Conditioning"]
+    },
+    {
+      "type": "Standard",
+      "description": "Comfortable room with standard amenities",
+      "basePriceRange": "300-350 TND",
+      "features": ["WiFi", "Air Conditioning", "Mini Bar"]
+    },
+    {
+      "type": "Deluxe",
+      "description": "Spacious room with premium amenities",
+      "basePriceRange": "400-450 TND",
+      "features": ["WiFi", "Air Conditioning", "Mini Bar", "Balcony"]
+    },
+    {
+      "type": "Suite",
+      "description": "Large suite with multiple rooms and luxury amenities",
+      "basePriceRange": "500-750 TND",
+      "features": ["WiFi", "Air Conditioning", "Mini Bar", "Kitchenette", "Living Area"]
+    },
+    {
+      "type": "Premium",
+      "description": "Luxury room with premium views and amenities",
+      "basePriceRange": "550-800 TND",
+      "features": ["WiFi", "Air Conditioning", "Mini Bar", "Jacuzzi", "Premium Views"]
+    }
+  ],
+  "pricing": {
+    "seasonalMultipliers": {
+      "summer": 1.5,
+      "winter": 0.8,
+      "spring": 1.2,
+      "autumn": 1.1
+    },
+    "viewTypeMultipliers": {
+      "sea": 1.3,
+      "pool": 1.2,
+      "specific": 1.1,
+      "none": 1.0
+    },
+    "roomTypeMultipliers": {
+      "Economy": 0.8,
+      "Standard": 1.0,
+      "Deluxe": 1.3,
+      "Suite": 1.6,
+      "Premium": 2.0
+    }
+  },
+  "amenities": [
+    "WiFi",
+    "Air Conditioning",
+    "Mini Bar",
+    "Sea View",
+    "Pool View",
+    "Mountain View",
+    "Balcony",
+    "Kitchenette",
+    "Jacuzzi",
+    "Room Service",
+    "Daily Housekeeping",
+    "Safe",
+    "TV",
+    "Coffee Machine"
+  ]
+}
